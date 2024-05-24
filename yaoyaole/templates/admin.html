@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>摇奖结果设置</title>
+		<style>
+			/* 样式可以根据自己的需求进行修改 */
+			body {
+				font-family: Arial, sans-serif;
+				background-color: #f2f2f2;
+				margin: 0;
+				padding: 0;
+			}
+
+			.container {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				height: 2000px;
+				padding: 20px;
+				box-sizing: border-box;
+			}
+
+			.form {
+				background-color: #ffffff;
+				padding: 250px 30px;
+				border-radius: 8px;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+				margin-bottom: 20px;
+				width: 100%;
+				height: 60%;
+				font-size: 1.8em;
+				box-sizing: border-box;
+			}
+
+			.input-group {
+				margin-bottom: 40px;
+			}
+
+			.input-group label {
+				display: block;
+				margin-bottom: 5px;
+				font-weight: bold;
+			}
+
+			.input-group input {
+			    width: 100%;
+			    padding: 8px;
+			    border: 1px solid #ccc;
+                font-size: 1em;
+			    height: 50px;
+			    border-radius: 4px;
+			}
+
+			.submit-button {
+				background-color: #4caf50;
+				color: white;
+				border: none;
+				padding: 10px 20px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 2.5em;
+				border-radius: 4px;
+				cursor: pointer;
+				width: 100%;
+			}
+
+			.message {
+				font-weight: bold;
+				margin-top: 10px;
+			}
+			
+			.title{
+				text-align: center;
+				margin-top: -50px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="container">
+				<form class="form" @submit.prevent="submitForm">
+					<h1 class="title">抽奖结果设置</h1>
+					<div class="input-group">
+						<label for="person_num">抽奖结果:</label>
+						<input type="text" id="person_num" v-model="personNum" required>
+					</div>
+					<div class="input-group">
+						<label for="pwd">密码:</label>
+						<input type="password" id="pwd" v-model="password" required>
+					</div>
+					<div class="input-group">
+						<button class="submit-button" type="submit">提交</button>
+					</div>
+				</form>
+				<div class="message" v-if="message">[[ message ]]</div>
+			</div>
+		</div>
+
+		<script src="https://unpkg.com/vue@2.6.14/dist/vue.min.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script>
+			new Vue({
+				el: '#app',
+                delimiters: ['[[', ']]'],
+				data: {
+					personNum: '',
+					password: '',
+					message: ''
+				},
+				methods: {
+					submitForm() {
+						let formData = {
+							person_num: this.personNum,
+							pwd: this.password
+						};
+                        console.log(formData)
+						axios.post('/person_num', formData)
+							.then(response => {
+								if (response.data.status === 'OK' && response.data.code === 0) {
+									this.message = response.data.msg;
+                                    alert(this.message)
+                                    console.log(this.message)
+								} else {
+									this.message = response.data.msg;
+                                    alert(this.message)
+                                    console.log(this.message)
+								}
+							})
+							.catch(error => {
+								this.message = '请求出错';
+								console.error(error);
+							});
+					}
+				}
+			});
+		</script>
+	</body>
+
+</html>

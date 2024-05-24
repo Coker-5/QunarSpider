@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="referrer" content="never">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}" media="screen">
+    <script src="{{ url_for('static', filename='vue.js') }}"></script>
+    <script src="{{ url_for('static', filename='axios.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.11.0.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='animateBackground-plugin.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='easing.js') }}"></script>
+    <title>开奖集成测试</title>
+    <meta name="keywords" content="开奖集成测试">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    
+    <header class="mui-bar mui-bar-nav">
+
+        <div class="mui-title" style="text-align: left;">开奖集成测试-全网最快开奖-最准预测</div>
+    </header>
+    
+    <div class="main" id="app">
+        
+        <div class="main-p">
+
+                <div class="notice">
+            <div class="notice-content">
+                <p style="margin-left: -499.4px;">以上广告均缴纳押金，站长担保，假一罚十。 若内容不符合或未能出款请联系我们投诉客服处理，严重者下架广告没收押金。</p>
+            
+                <p>以上广告均缴纳押金，站长担保，假一罚十。 若内容不符合或未能出款请联系我们投诉客服处理，严重者下架广告没收押金。</p>
+            
+                <p>以上广告均缴纳押金，站长担保，假一罚十。 若内容不符合或未能出款请联系我们投诉客服处理，严重者下架广告没收押金。</p>
+            </div>
+            <div class="notice-more"></div>
+        </div>
+        <script>
+            function Marquee(selector, speed) {
+                const parentSelector = document.querySelector(selector);
+                const clone = parentSelector.innerHTML;
+                const firstElement = parentSelector.children[0];
+                let i = 0;
+
+                parentSelector.insertAdjacentHTML('beforeend', clone);
+                parentSelector.insertAdjacentHTML('beforeend', clone);
+
+                setInterval(function () {
+                    firstElement.style.marginLeft = `-${i}px`;
+                    if (i > firstElement.clientWidth) {
+                    i = 0;
+                    }
+                    i = i + speed;
+                }, 0);
+            }
+
+            window.addEventListener('load', Marquee('.notice-content', 0.2))
+        </script>
+
+        <div class="issue">
+			<div class="issue-block">
+            <div class="issue-item">
+                <div class="issue-data">
+                    <div><span id="qishu">[[ qihao ]]</span> 期</div>
+                    <div class="issue-btns">
+                        <button id="prev">&lt;</button>
+                        <span class="issue-list">
+                            <span id="qishu2">3033218</span>
+                            <span class="issue-c"></span>
+                        </span>
+                        <button id="next" disabled="">&gt;</button>
+                        <ul class="issue-more"><li>3033218</li><li>3033217</li><li>3033216</li><li>3033215</li><li>3033214</li><li>3033213</li><li>3033212</li><li>3033211</li><li>3033210</li><li>3033209</li><li>3033208</li><li>3033207</li><li>3033206</li><li>3033205</li><li>3033204</li><li>3033203</li><li>3033202</li><li>3033201</li><li>3033200</li><li>3033199</li><li>3033198</li><li>3033197</li><li>3033196</li><li>3033195</li><li>3033194</li><li>3033193</li><li>3033192</li><li>3033191</li><li>3033190</li><li>3033189</li><li>3033188</li><li>3033187</li><li>3033186</li><li>3033185</li><li>3033184</li><li>3033183</li><li>3033182</li><li>3033181</li><li>3033180</li><li>3033179</li><li>3033178</li><li>3033177</li><li>3033176</li><li>3033175</li><li>3033174</li><li>3033173</li><li>3033172</li><li>3033171</li><li>3033170</li><li>3033169</li><li>3033168</li><li>3033167</li><li>3033166</li><li>3033165</li><li>3033164</li><li>3033163</li><li>3033162</li><li>3033161</li><li>3033160</li><li>3033159</li><li>3033158</li><li>3033157</li><li>3033156</li><li>3033155</li><li>3033154</li><li>3033153</li><li>3033152</li><li>3033151</li><li>3033150</li><li>3033149</li><li>3033148</li><li>3033147</li><li>3033146</li><li>3033145</li><li>3033144</li><li>3033143</li><li>3033142</li><li>3033141</li><li>3033140</li><li>3033139</li><li>3033138</li><li>3033137</li><li>3033136</li><li>3033135</li><li>3033134</li><li>3033133</li><li>3033132</li><li>3033131</li><li>3033130</li><li>3033129</li><li>3033128</li><li>3033127</li><li>3033126</li><li>3033125</li><li>3033124</li><li>3033123</li><li>3033122</li><li>3033121</li><li>3033120</li><li>3033119</li></ul>
+                    </div>
+                </div>
+                <div class="issue-mi" onclick="openMipai()">咪牌</div>
+            </div>
+            <div class="issue-item">
+                <div id="opentime">
+                    距离下期开奖 
+                    <span id="times">[[ countdown ]]<span></span></span>
+                </div>
+            </div>
+			</div>
+                   <img src="../liabrary/images/bg.jpg" class="bg"/>
+		</div>
+
+               <div class="main_bg">
+    <div class="animation-main">
+        <div class="num_mask"></div>
+        <div class="num_box">
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+            <div class="num"></div>
+        </div>
+    </div>
+</div>
+
+        <div class="result">
+            <div class="result-table" id="result">
+                <div class="result-thead">
+                    <span>期号</span>
+                    <span class="p150">时间</span>
+                    <span>号码</span>
+                </div>
+                <div v-for="items in history" :key="items.id" class="result-tr">
+                    <span>[[items.id]]</span>
+                    <span class="p150">[[ items.time ]]</span>
+                    <span>[[ items.result ]]</span>
+                </div>
+
+                            </div>
+
+                                    </div>
+        <footer class="copyright">
+            Copyright © 2023 开奖集成测试-全网最快开奖-最准预测 All rights reserved.
+        </footer>
+        
+        </div>
+    </div>
+ 
+    <script>
+        new Vue({
+              el: '#app',
+              delimiters: ['[[', ']]'],
+              data: {
+                countdown: '',
+                qihao: '',
+                history: [],
+              },
+              created() {
+                this.myFunction(this.handleResult);
+              },
+              methods: {
+                getData() {
+                  return axios.get('/get_data')
+                    .then(response => {
+                      if (response.data.countdown == '0:50') {
+                        return { 'status': true, 'response': response };
+                      } else {
+                        return { 'status': false, 'response': response };
+                      }
+                    })
+                    .catch(error => {
+                      console.log(error);
+                    });
+                },
+                myFunction(callback) {
+                  const times = setTimeout(() => {
+                    this.getData().then(result => {
+                      callback(result); // 调用回调函数并传递返回值
+                    });
+                  }, 1000);
+                },
+                handleResult(result) {
+                  if (result.status == true) {
+                    clearTimeout(this.times);
+                    this.changeAnimation(result.response);
+                  }
+                  else {
+                      this.countdown = result.response.data.countdown
+                      this.history = result.response.data.history.reverse()
+                      this.qihao = parseInt(result.response.data.history[0].id) + 1
+                      this.myFunction(this.handleResult);
+                  }
+                },
+                sleep(ms) {
+                  return new Promise(resolve => setTimeout(resolve, ms));
+                },
+                async changeAnimation(response) {
+                  this.countdown = '开奖中';
+                  var result = response.data.history[this.history.length].result;
+                  var num_arr = (result + '').split('');
+                  var u = 265;
+                  $(".num").css('background-position', '11px 0');
+                  $(".num").each(function (index) {
+                    var _num = $(this);
+                    var yPos = (u * 60) - (u * num_arr[index]);
+                    setTimeout(function () {
+                      _num.animate({
+                        backgroundPosition: '11px ' + yPos + 'px'
+                      }, {
+                        duration: 6000 + index * 3000,
+                        easing: "easeInOutCirc",
+                        complete: function () {
+                          if (index == 3) isBegin = false;
+                        }
+                      });
+                    }, index * 300);
+                  });
+                  console.log("动画播放中");
+                  await this.sleep(16500);
+                  console.log("动画播放完成");
+                  this.myFunction(this.handleResult);
+                }
+              }
+            });
+    </script>
+</body>
+</html>

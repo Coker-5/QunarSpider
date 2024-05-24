@@ -1,0 +1,53 @@
+
+.main_bg {
+	height:190px;
+	transform: scale(0.5);
+}
+.animation-main {
+	width: 100%;
+	height: 325px;
+	position: relative;
+	margin: 0 auto;
+}
+.bg {
+    width: 100%;
+    position: absolute;
+    height: 210px;
+    left: 0;
+    top: 85px;
+    z-index: 0;
+}
+.num_mask {
+	background: url(images/num_mask.png) 0px 0px no-repeat;
+	height: 184px;
+	width: 740px;
+	position: absolute;
+	left: 50%;
+	top: -15px;
+	margin-left: -370px;
+	z-index: 9;
+}
+.num_box {
+	height: 300px;
+	width: 750px;
+	position: absolute;
+	left: 50%;
+	top: -15px;
+	margin-left: -370px;
+	z-index: 8;
+	overflow: hidden;
+	text-align: center;
+}
+.num {
+	background: url(images/num.png) top center repeat-y;
+	width: 181px;
+	height: 265px;
+	float: left;
+	margin-right: 6px;
+}
+
+.result {
+	text-align: center;
+	color: #ffffff;
+	padding-top: 20px;
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>数字摇奖(老虎机)</title>
+<meta name="keyword" content="数字，抽奖，摇奖，老虎机">
+<meta name="description" content="老虎机形式的摇奖">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}" media="screen">
+<script src="{{ url_for('static', filename='vue.js') }}"></script>
+<script src="{{ url_for('static', filename='axios.js') }}"></script>
+</head>
+<body>
+    <div class="data-box">
+        <div id="app">
+            <h1>开奖功能</h1>
+            <p>期号：[[ qihao ]]</p>
+            <p>下一轮倒计时: <span>[[ countdown ]]</span></p>
+            <p>开奖记录：</p>
+            <ul>
+                <li v-for="items in history" :key="items.time+items.result">
+                   期号：[[items.id]]  开奖时间：[[ items.time ]]  开奖数字：[[ items.result ]]
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="main_bg">
+        <div class="main">
+            <div class="num_mask"></div>
+            <div class="num_box">
+                <div class="num"></div>
+                <div class="num"></div>
+                <div class="num"></div>
+                <div class="num"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.11.0.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='animateBackground-plugin.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='easing.js') }}"></script>
+    <script>
+        new Vue({
+              el: '#app',
+              delimiters: ['[[', ']]'],
+              data: {
+                countdown: '',
+                qihao: '',
+                history: [],
+              },
+              created() {
+                this.myFunction(this.handleResult);
+              },
+              methods: {
+                getData() {
+                  return axios.get('/get_data')
+                    .then(response => {
+                      if (response.data.countdown == '0:50') {
+                        return { 'status': true, 'response': response };
+                      } else {
+                        return { 'status': false, 'response': response };
+                      }
+                    })
+                    .catch(error => {
+                      console.log(error);
+                    });
+                },
+                myFunction(callback) {
+                  const times = setTimeout(() => {
+                    this.getData().then(result => {
+                      callback(result); // 调用回调函数并传递返回值
+                    });
+                  }, 1000);
+                },
+                handleResult(result) {
+                  if (result.status == true) {
+                    clearTimeout(this.times);
+                    this.changeAnimation(result.response);
+                  }
+                  else {
+                      this.countdown = result.response.data.countdown
+                      this.history = result.response.data.history.reverse()
+                      this.qihao = parseInt(result.response.data.history[0].id) + 1
+                      this.myFunction(this.handleResult);
+                  }
+                },
+                sleep(ms) {
+                  return new Promise(resolve => setTimeout(resolve, ms));
+                },
+                async changeAnimation(response) {
+                  this.countdown = '开奖中';
+                  var result = response.data.history[this.history.length].result;
+                  var num_arr = (result + '').split('');
+                  var u = 265;
+                  $(".num").css('background-position', '11px 0');
+                  $(".num").each(function (index) {
+                    var _num = $(this);
+                    var yPos = (u * 60) - (u * num_arr[index]);
+                    setTimeout(function () {
+                      _num.animate({
+                        backgroundPosition: '11px ' + yPos + 'px'
+                      }, {
+                        duration: 6000 + index * 3000,
+                        easing: "easeInOutCirc",
+                        complete: function () {
+                          if (index == 3) isBegin = false;
+                        }
+                      });
+                    }, index * 300);
+                  });
+                  console.log("动画播放中");
+                  await this.sleep(17000);
+                  console.log("动画播放完成");
+                  this.myFunction(this.handleResult);
+                }
+              }
+            });
+    </script>
+    <div id="acMessage"></div>
+</body>
+</html>
